@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskPlanner.DB;
+using TaskPlannerAPI;
 
-namespace TaskPlannerAPI.Controllers;
+namespace TaskPlanner.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -9,18 +10,15 @@ public class WeatherForecastController : ControllerBase
 {
     private readonly TaskPlannerContext _taskPlannerContext;
 
-    public WeatherForecastController(TaskPlannerContext taskPlannerContext, ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(TaskPlannerContext taskPlannerContext)
     {
         _taskPlannerContext = taskPlannerContext;
-        _logger = logger;
     }
 
     private static readonly string[] Summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
-
-    private readonly ILogger<WeatherForecastController> _logger;
 
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
