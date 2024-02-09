@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TaskPlanner.DB;
+using TaskPlanner.Data;
 using TaskPlannerAPI;
 
 namespace TaskPlanner.Controllers;

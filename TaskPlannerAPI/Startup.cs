@@ -1,4 +1,7 @@
-﻿using TaskPlanner.DB;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using TaskPlanner.Data;
+using TaskPlanner.Entities;
 
 namespace TaskPlanner;
 
@@ -9,22 +12,29 @@ public class Startup
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        services.AddAuthentication();
         services.AddDbContext<TaskPlannerContext>();
+        /*services
+            .AddIdentity<User, Role>()
+            .AddEntityFrameworkStores<TaskPlannerContext>()
+            .AddUserManager<UserManager<User>>()
+            .AddRoleManager<RoleManager<Role>>()
+            .AddSignInManager<SignInManager<User>>();*/
+        
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        //app.UseWelcomePage();
         if (env.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
         app.UseRouting();
-
         app.UseHttpsRedirection();
-
+        app.UseAuthentication();
         app.UseAuthorization();
-
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
     }

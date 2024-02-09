@@ -1,4 +1,4 @@
-using TaskPlanner.DB;
+using TaskPlanner.Data;
 
 namespace TaskPlanner;
 

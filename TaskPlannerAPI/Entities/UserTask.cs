@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskPlanner.Entities;
@@ -14,7 +13,7 @@ public class UserTask
     [Column("user_id")]
     public int UserId { get; set; }
     [ForeignKey(nameof(UserId))]
-    public virtual User User { get; set; } = null!;
+    public virtual User User { get; set; } = default!;
 
     [Column("name")]
     public string Name { get; set; } = null!;
