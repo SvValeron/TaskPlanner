@@ -26,6 +26,11 @@ public class User//: IdentityUser<int>
     [Column("phone_number")]
     [Required]
     public string? PhoneNumber { get; set; }
+    
+    [Column("user_roles")]
+    public int UserRole { get; set; }
+    [ForeignKey(nameof(UserRole))]
+    public virtual Role Role { get; set; } = default!;
 
     [NotMapped]
     [ForeignKey(nameof(UserTask.UserId))]

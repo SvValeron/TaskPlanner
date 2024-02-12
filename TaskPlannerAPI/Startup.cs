@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using TaskPlanner.Data;
 using TaskPlanner.Entities;
+using TaskPlanner.InitDataFactory;
 
 namespace TaskPlanner;
 
@@ -14,13 +15,14 @@ public class Startup
         services.AddSwaggerGen();
         services.AddAuthentication();
         services.AddDbContext<TaskPlannerContext>();
+        services.AddSingleton<IDataFactory, TestDataFactory>();
         /*services
             .AddIdentity<User, Role>()
             .AddEntityFrameworkStores<TaskPlannerContext>()
             .AddUserManager<UserManager<User>>()
             .AddRoleManager<RoleManager<Role>>()
             .AddSignInManager<SignInManager<User>>();*/
-        
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using TaskPlanner.Entities;
+using TaskPlanner.InitDataFactory;
 
 
 namespace TaskPlanner.Data;
@@ -13,7 +14,9 @@ public class TaskPlannerContext : DbContext//IdentityDbContext<User, Role, int>
         Database.EnsureDeleted();
         Database.EnsureCreated();
     }*/
-
+    private readonly IDataFactory _dataFactory;
+    
+    
     public DbSet<Role> Roles { get; set; } = default!;
     public DbSet<UserTask> UserTasks { get; set; } = default!;
     public DbSet<User> Users { get; set; } = default!;
@@ -23,11 +26,47 @@ public class TaskPlannerContext : DbContext//IdentityDbContext<User, Role, int>
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 
-    public TaskPlannerContext()
+    public TaskPlannerContext(IDataFactory dataFactory)
     {
+        _dataFactory = dataFactory;
         Database.EnsureDeleted();
         Database.EnsureCreated();
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        /*modelBuilder.Entity<User>().HasData(_dataFactory.GetUsers());
+        modelBuilder.Entity<UserTask>().HasData(_dataFactory.GetUserTasks());
+        modelBuilder.Entity<Role>().HasData(_dataFactory.GetRoles());*/
+        
+        /*HasData(typeof(User),_dataFactory.GetUsers());
+        HasData(typeof(UserTask),_dataFactory.GetUserTasks());
+        HasData(typeof(Role),_dataFactory.GetRoles());
+        
+        HasDataGeneric<User>(_dataFactory.GetUsers());
+        HasDataGeneric<UserTask>(_dataFactory.GetUserTasks());
+        HasDataGeneric<Role>(_dataFactory.GetRoles());*/
+        
+        HasData(_dataFactory.GetRoles());
+        HasData(_dataFactory.GetUsers());
+        HasData(_dataFactory.GetUserTasks());
+
+        /*void HasData(Type type, object[] entities)
+        {
+            modelBuilder.Entity(type).HasData(entities);
+        }
+
+        void HasDataGeneric<T>(object[] entities) where T: class
+        {
+            modelBuilder.Entity<T>().HasData(entities);
+        }*/
+        
+        void HasData<T>(T[] entities) where T: class
+        {
+            modelBuilder.Entity<T>().HasData(entities);
+        }
+    }
+
     /*protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

@@ -16,5 +16,8 @@ public class Role// : IdentityRole<int>
     [Column("Name")]
     [Required]
     public string Name { get; set; } = default!;
-
+    
+    [NotMapped]
+    [ForeignKey(nameof(User.UserRole))]
+    public virtual IList<User> Users { get; set; } = default!;
 }
