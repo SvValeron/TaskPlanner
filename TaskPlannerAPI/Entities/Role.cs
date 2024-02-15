@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ public class Role// : IdentityRole<int>
     public string Name { get; set; } = default!;
     
     [NotMapped]
-    [ForeignKey(nameof(User.UserRole))]
+    [InverseProperty(nameof(User.UserRole))]
+    //[IgnoreDataMember]
     public virtual IList<User> Users { get; set; } = default!;
 }

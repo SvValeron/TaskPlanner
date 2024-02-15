@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Identity;
 
 namespace TaskPlanner.Entities;
@@ -33,6 +34,6 @@ public class User//: IdentityUser<int>
     public virtual Role Role { get; set; } = default!;
 
     [NotMapped]
-    [ForeignKey(nameof(UserTask.UserId))]
+    [InverseProperty(nameof(UserTask.UserId))]
     public virtual IList<UserTask> UserTasks { get; set; } = default!;
 }

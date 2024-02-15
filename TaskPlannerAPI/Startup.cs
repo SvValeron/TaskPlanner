@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AutoMapper;
+using TaskPlanner.AutoMapper.Configuration;
 using TaskPlanner.Data;
-using TaskPlanner.Entities;
 using TaskPlanner.InitDataFactory;
+using IConfigurationProvider = AutoMapper.IConfigurationProvider;
 
 namespace TaskPlanner;
 
@@ -16,13 +16,15 @@ public class Startup
         services.AddAuthentication();
         services.AddDbContext<TaskPlannerContext>();
         services.AddSingleton<IDataFactory, TestDataFactory>();
+        //services.AddAutoMapper(typeof(Startup));
         /*services
             .AddIdentity<User, Role>()
             .AddEntityFrameworkStores<TaskPlannerContext>()
             .AddUserManager<UserManager<User>>()
             .AddRoleManager<RoleManager<Role>>()
             .AddSignInManager<SignInManager<User>>();*/
-
+        services.AddScoped<IConfigurationProvider, TaskPlannerMapperConfiguration>();
+        services.AddScoped<IMapper, TaskPlannerMapper>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
